@@ -23,7 +23,7 @@ public class PelaajanKasi {
         
         for (Kortti kortti : kortit) {
             if (kortti.getArvo() == 1) {
-                summa += 1;
+                summa += 11;
             } else if (kortti.getArvo() >= 11 && kortti.getArvo() <= 13) {
                 summa += 10;
             } else {
