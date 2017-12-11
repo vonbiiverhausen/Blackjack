@@ -49,7 +49,7 @@ public class BlackjackIkkuna extends JFrame {
                         .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addComponent(lbKortit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbPelaaja, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbNaytaKortit)))
                 .addContainerGap(267, Short.MAX_VALUE))
         );
@@ -58,12 +58,12 @@ public class BlackjackIkkuna extends JFrame {
             .addGroup(peliPaneeliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbPelaaja)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(peliPaneeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(lbKortit)
                     .addComponent(lbNaytaKortit))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(peliPaneeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPisteet)
                     .addComponent(lbNaytaPisteet))
                 .addContainerGap(228, Short.MAX_VALUE))
@@ -80,10 +80,9 @@ public class BlackjackIkkuna extends JFrame {
             .addComponent(peliPaneeli, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         
-        peliIkkuna.add(this);
+        peliIkkuna.add(peliPaneeli);
         peliIkkuna.setSize(400, 400);
         peliIkkuna.setVisible(true);
         pack();
-        
     }
 }
