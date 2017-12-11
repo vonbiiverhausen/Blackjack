@@ -53,6 +53,7 @@ public class BlackjackIkkuna extends JFrame {
                         .addComponent(lbNaytaKortit)))
                 .addContainerGap(267, Short.MAX_VALUE))
         );
+        
         peliPaneeliLayout.setVerticalGroup(
             peliPaneeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(peliPaneeliLayout.createSequentialGroup()
@@ -75,6 +76,7 @@ public class BlackjackIkkuna extends JFrame {
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(peliPaneeli, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+        
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(peliPaneeli, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
