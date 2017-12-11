@@ -110,9 +110,6 @@ public class BlackjackGUI extends javax.swing.JFrame {
         
         Korttipakka pelipakka = new Korttipakka(1);
         PelaajanKasi pelaaja = new PelaajanKasi();
-        lbNaytaKortit.setText("testi");
-        lbNaytaPisteet.setText("");
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
