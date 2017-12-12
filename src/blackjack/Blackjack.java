@@ -6,6 +6,10 @@ import javax.swing.JFrame;
 
 public class Blackjack {
     
+    private static void miLopetaActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        System.exit(0);
+    }  
+    
     private static void miPelaaActionPerformed(java.awt.event.ActionEvent evt, PelaajanKasi pelaaja, BlackjackIkkuna peli, Korttipakka pakka) {                                        
         pelaaja.nollaaKasi();
         pakka.nollaaPakka();
@@ -54,6 +58,12 @@ public class Blackjack {
         peli.miPelaa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miPelaaActionPerformed(evt, pelaaja, peli, pakka);
+            }
+        });
+        
+        peli.miLopeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLopetaActionPerformed(evt);
             }
         });
     }

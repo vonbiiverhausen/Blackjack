@@ -105,6 +105,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
         mPeli.add(miPelaa);
 
         miLopeta.setText("Lopeta");
+        miLopeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLopetaActionPerformed(evt);
+            }
+        });
         mPeli.add(miLopeta);
 
         mbMain.add(mPeli);
@@ -134,8 +139,12 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_bnPelaaKasiActionPerformed
 
     private void miPelaaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPelaaActionPerformed
-        // TODO add your handling code here:
+        // Siirrä pelivuoro koneelle
     }//GEN-LAST:event_miPelaaActionPerformed
+
+    private void miLopetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLopetaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_miLopetaActionPerformed
 
     /**
      * @param args the command line arguments
