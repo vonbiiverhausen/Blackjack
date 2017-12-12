@@ -11,6 +11,10 @@ public class PelaajanKasi {
         this.onBlackJack = false;
     }
     
+    public boolean onBlackjack() {
+        return this.onBlackJack;
+    }
+    
     public void otaKortti(Kortti kortti) {
         this.kortit.add(kortti);
     }
@@ -35,17 +39,11 @@ public class PelaajanKasi {
             summa -= 10;
         }
         
-        return summa;
-    }
-//    Blackjackiksi kutsutaan tilannetta, jolla pelaajalla on kaksi korttia, joista toinen on arvoltaan 10-13
-//    ja toinen ässä. Toteuta luokkaan PelaajanKasi, metodi joka tutkii onko kätenä blackjack.
-    private void onkoBlackjack() {
-        // kaksi korttia = kortit.size() == 2
-        // kaksi korttia; yksi ässä, yksi arvoltaa 10-13
-        // Näiden summa on 21
-        if (kortit.size()==2 && this.selvitaSumma() == 21) {
+        if (kortit.size()==2 && summa == 21) {
             this.onBlackJack = true;
         }
+        
+        return summa;
     }
     
     // palauttaa pelaajan käden kortin indeksissä 'indeksi'

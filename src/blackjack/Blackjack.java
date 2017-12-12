@@ -6,29 +6,6 @@ import javax.swing.JFrame;
 
 public class Blackjack {
     
-    private static void miLopetaActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        System.exit(0);
-    }  
-    
-    private static void miPelaaActionPerformed(java.awt.event.ActionEvent evt, PelaajanKasi pelaaja, BlackjackIkkuna peli, Korttipakka pakka) {                                        
-        pelaaja.nollaaKasi();
-        pakka.nollaaPakka();
-        peli.asetaKortit(pelaaja.naytaKasi());
-        peli.asetaPisteet(pelaaja.selvitaSumma());
-        peli.bnOtaKortti.setEnabled(true);
-        peli.bnPelaaKasi.setEnabled(true);
-    } 
-    
-    private static void bnOtaKorttiActionPerformed(ActionEvent evt, PelaajanKasi pelaaja, BlackjackIkkuna peli, Korttipakka pakka) {
-        pelaaja.otaKortti(pakka.jaaKortti());
-        peli.asetaKortit(pelaaja.naytaKasi());
-        peli.asetaPisteet(pelaaja.selvitaSumma());
-    }
-    
-    private static void bnPelaaKasiActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    } 
-    
     public static void main(String[] args) {
         Korttipakka pakka = new Korttipakka(1);
         PelaajanKasi pelaaja = new PelaajanKasi();
@@ -42,28 +19,61 @@ public class Blackjack {
         peli.asetaKortit(pelaaja.naytaKasi());
         peli.asetaPisteet(pelaaja.selvitaSumma());
         
+        // ActionListenerit
+        
+        // 'Ota Kortti' painike
         peli.bnOtaKortti.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                bnOtaKorttiActionPerformed(evt, pelaaja, peli, pakka);
+                pelaaja.otaKortti(pakka.jaaKortti());
+                peli.asetaKortit(pelaaja.naytaKasi());
+                peli.asetaPisteet(pelaaja.selvitaSumma());
+                if (pelaaja.selvitaSumma() > 21) {
+                    // häviä
+                    
+                    System.out.println("Yli 21 pistettä! Hävisit!");
+                }
             }
         });
         
+        // 'Pelaa Käsi' Painike
         peli.bnPelaaKasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bnPelaaKasiActionPerformed(evt);
+                // Painike 'Pelaa Käsi'
+                // Vuoro siirtyy talolle
+                // Disabloi painikkeet
             }
         });
         
+        // MenuItem 'Pelaa'
         peli.miPelaa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miPelaaActionPerformed(evt, pelaaja, peli, pakka);
+                // Nollataan tiedot, käytetään uuden pelin alustuksessa
+                pelaaja.nollaaKasi();
+                pakka.nollaaPakka();
+
+                // Aluksi saadaan kaksi korttia
+                pelaaja.otaKortti(pakka.jaaKortti());
+                pelaaja.otaKortti(pakka.jaaKortti());
+
+                // Päivitetään käsi- ja pistekentät
+                peli.asetaKortit(pelaaja.naytaKasi());
+                peli.asetaPisteet(pelaaja.selvitaSumma());
+                
+                if (pelaaja.onBlackjack()) {
+                    System.out.println("Blackjack!");
+                }
+
+                // Enabloidaan näppäimet, jotta voidaan pelata
+                peli.bnOtaKortti.setEnabled(true);
+                peli.bnPelaaKasi.setEnabled(true);
             }
         });
         
-        peli.miLopeta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miLopetaActionPerformed(evt);
+        // 'Lopeta' MenuItem
+        peli.miLopeta.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                System.exit(0);
             }
         });
     }
