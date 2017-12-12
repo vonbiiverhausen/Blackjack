@@ -24,6 +24,7 @@ public class Korttipakka {
             luoKortit("Pata");
             luoKortit("Risti");
         }
+        this.sekoita();
     }
     
     public void sekoita() {

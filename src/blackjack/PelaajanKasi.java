@@ -16,9 +16,9 @@ public class PelaajanKasi {
     }
     
     public int selvitaSumma() {
-// kortin arvo 2-10:        käden summaan lisätään kortin numeroa vastaava arvo(2 lisätään 2, 3 lisätään 3.)
-// kortin arvo 11-13:       käden summaan lisätään 10
-// kortin arvo 1 (ässä):    käden summaan lisätään 11
+    // kortin arvo 2-10:        käden summaan lisätään kortin numeroa vastaava arvo(2 lisätään 2, 3 lisätään 3.)
+    // kortin arvo 11-13:       käden summaan lisätään 10
+    // kortin arvo 1 (ässä):    käden summaan lisätään 11
         int summa = 0;
         
         for (Kortti kortti : kortit) {
@@ -51,5 +51,13 @@ public class PelaajanKasi {
     // palauttaa pelaajan käden kortin indeksissä 'indeksi'
     public String testaaKortti(int indeksi) {
         return this.kortit.get(indeksi).toString();
+    }
+    
+    public String naytaKasi() {
+        String kasi = "";
+        for (Kortti kortti : kortit) {
+            kasi += kortti.getMaa()+" ";
+        }
+        return kasi;
     }
 }

@@ -2,6 +2,8 @@ package blackjack;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class BlackjackIkkuna extends JFrame {
     private JFrame peliIkkuna;
@@ -11,6 +13,12 @@ public class BlackjackIkkuna extends JFrame {
     private JLabel lbNaytaPisteet;
     private JLabel lbPelaaja;
     private JLabel lbPisteet;
+    JButton bnOtaKortti;
+    JButton bnPelaaKasi;
+    private JMenu mPeli;
+    private JMenuBar mbMain;
+    JMenuItem miLopeta;
+    JMenuItem miPelaa;
     
     public BlackjackIkkuna() {
         peliIkkuna = new JFrame();
@@ -20,20 +28,27 @@ public class BlackjackIkkuna extends JFrame {
         lbPisteet = new JLabel();
         lbNaytaPisteet = new JLabel();
         lbNaytaKortit = new JLabel();
-        
-        peliIkkuna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        bnOtaKortti = new JButton();
+        bnPelaaKasi = new JButton();
+        mbMain = new JMenuBar();
+        mPeli = new JMenu();
+        miPelaa = new JMenuItem();
+        miLopeta = new JMenuItem();
         
         lbPelaaja.setText("Pelaaja");
         lbKortit.setText("Kortit: ");
+        lbNaytaKortit.setText("Kortit tähän");
         lbPisteet.setText("Pisteet: ");
         lbNaytaPisteet.setText("Pisteet tähän");
-        
-//        peliIkkuna.add(peliPaneeli);
-//        peliPaneeli.add(lbPelaaja);
-//        peliPaneeli.add(lbKortit);
-//        peliPaneeli.add(lbPisteet);
-//        peliPaneeli.add(lbNaytaPisteet);
-//        peliPaneeli.add(lbNaytaKortit);
+        bnOtaKortti.setText("Ota Kortti");
+        bnPelaaKasi.setText("Pelaa Käsi");
+        mPeli.setText("Peli");
+        miPelaa.setText("Pelaa");
+        mPeli.add(miPelaa);
+        miLopeta.setText("Lopeta");
+        mPeli.add(miLopeta);
+        mbMain.add(mPeli);
+        setJMenuBar(mbMain);
         
         GroupLayout peliPaneeliLayout = new GroupLayout(peliPaneeli);
         peliPaneeli.setLayout(peliPaneeliLayout);
@@ -50,7 +65,9 @@ public class BlackjackIkkuna extends JFrame {
                             .addComponent(lbKortit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbPelaaja, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbNaytaKortit)))
+                        .addComponent(lbNaytaKortit))
+                    .addComponent(bnOtaKortti)
+                    .addComponent(bnPelaaKasi))
                 .addContainerGap(267, Short.MAX_VALUE))
         );
         
@@ -67,7 +84,11 @@ public class BlackjackIkkuna extends JFrame {
                 .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPisteet)
                     .addComponent(lbNaytaPisteet))
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bnOtaKortti)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bnPelaaKasi)
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -84,7 +105,14 @@ public class BlackjackIkkuna extends JFrame {
         
         peliIkkuna.add(peliPaneeli);
         peliIkkuna.setSize(400, 400);
-        peliIkkuna.setVisible(true);
         pack();
+    }
+    
+    public void asetaPisteet(int pisteet) {
+        this.lbNaytaPisteet.setText(""+pisteet);
+    }
+    
+    public void asetaKortit(String kasi) {
+        this.lbNaytaKortit.setText(kasi);
     }
 }

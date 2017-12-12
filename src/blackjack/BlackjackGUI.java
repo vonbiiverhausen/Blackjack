@@ -21,6 +21,12 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbPisteet = new javax.swing.JLabel();
         lbNaytaPisteet = new javax.swing.JLabel();
         lbNaytaKortit = new javax.swing.JLabel();
+        bnOtaKortti = new javax.swing.JButton();
+        bnPelaaKasi = new javax.swing.JButton();
+        mbMain = new javax.swing.JMenuBar();
+        mPeli = new javax.swing.JMenu();
+        miPelaa = new javax.swing.JMenuItem();
+        miLopeta = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -31,6 +37,20 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbPisteet.setText("Pisteet: ");
 
         lbNaytaPisteet.setText("Pisteet tähän");
+
+        bnOtaKortti.setText("Ota Kortti");
+        bnOtaKortti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnOtaKorttiActionPerformed(evt);
+            }
+        });
+
+        bnPelaaKasi.setText("Pelaa Käsi");
+        bnPelaaKasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnPelaaKasiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -48,7 +68,10 @@ public class BlackjackGUI extends javax.swing.JFrame {
                             .addComponent(lbKortit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbPelaaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbNaytaKortit)))
+                        .addComponent(lbNaytaKortit))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(bnOtaKortti, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bnPelaaKasi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(267, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -64,8 +87,24 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPisteet)
                     .addComponent(lbNaytaPisteet))
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bnOtaKortti)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bnPelaaKasi)
+                .addContainerGap(129, Short.MAX_VALUE))
         );
+
+        mPeli.setText("Peli");
+
+        miPelaa.setText("Pelaa");
+        mPeli.add(miPelaa);
+
+        miLopeta.setText("Lopeta");
+        mPeli.add(miLopeta);
+
+        mbMain.add(mPeli);
+
+        setJMenuBar(mbMain);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,6 +119,14 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bnOtaKorttiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnOtaKorttiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bnOtaKorttiActionPerformed
+
+    private void bnPelaaKasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnPelaaKasiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bnPelaaKasiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,11 +160,17 @@ public class BlackjackGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bnOtaKortti;
+    private javax.swing.JButton bnPelaaKasi;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbKortit;
     private static javax.swing.JLabel lbNaytaKortit;
     private static javax.swing.JLabel lbNaytaPisteet;
     private javax.swing.JLabel lbPelaaja;
     private javax.swing.JLabel lbPisteet;
+    private javax.swing.JMenu mPeli;
+    private javax.swing.JMenuBar mbMain;
+    private javax.swing.JMenuItem miLopeta;
+    private javax.swing.JMenuItem miPelaa;
     // End of variables declaration//GEN-END:variables
 }
