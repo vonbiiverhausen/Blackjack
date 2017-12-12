@@ -6,7 +6,16 @@ import javax.swing.JFrame;
 
 public class Blackjack {
     
-    private static void bnOtaKorttiActionPerformed(ActionEvent evt, PelaajanKasi pelaaja, BlackjackIkkuna peli, Korttipakka pakka) {                                            
+    private static void miPelaaActionPerformed(java.awt.event.ActionEvent evt, PelaajanKasi pelaaja, BlackjackIkkuna peli, Korttipakka pakka) {                                        
+        pelaaja.nollaaKasi();
+        pakka.nollaaPakka();
+        peli.asetaKortit(pelaaja.naytaKasi());
+        peli.asetaPisteet(pelaaja.selvitaSumma());
+        peli.bnOtaKortti.setEnabled(true);
+        peli.bnPelaaKasi.setEnabled(true);
+    } 
+    
+    private static void bnOtaKorttiActionPerformed(ActionEvent evt, PelaajanKasi pelaaja, BlackjackIkkuna peli, Korttipakka pakka) {
         pelaaja.otaKortti(pakka.jaaKortti());
         peli.asetaKortit(pelaaja.naytaKasi());
         peli.asetaPisteet(pelaaja.selvitaSumma());
@@ -22,11 +31,9 @@ public class Blackjack {
         BlackjackIkkuna peli = new BlackjackIkkuna();
         peli.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         peli.setVisible(true);
-        
-        // Pelaaja saa alussa kaksi korttia
-        pelaaja.otaKortti(pakka.jaaKortti());
-        pelaaja.otaKortti(pakka.jaaKortti());
-        
+        peli.bnOtaKortti.setEnabled(false);
+        peli.bnPelaaKasi.setEnabled(false);
+
         // Näytetään tilanne
         peli.asetaKortit(pelaaja.naytaKasi());
         peli.asetaPisteet(pelaaja.selvitaSumma());
@@ -41,6 +48,12 @@ public class Blackjack {
         peli.bnPelaaKasi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bnPelaaKasiActionPerformed(evt);
+            }
+        });
+        
+        peli.miPelaa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miPelaaActionPerformed(evt, pelaaja, peli, pakka);
             }
         });
     }

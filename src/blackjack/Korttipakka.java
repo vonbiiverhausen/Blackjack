@@ -38,6 +38,17 @@ public class Korttipakka {
         return palautettavaKortti;
     }
     
+    public void nollaaPakka() {
+        this.pakka.clear();
+        for (int i = 0; i < 1; i++) {
+            luoKortit("Hertta");
+            luoKortit("Ruutu");
+            luoKortit("Pata");
+            luoKortit("Risti");
+        }
+        this.sekoita();
+    }
+    
     // Testataan pakan täyttö korteilla
     public String testaaKortti(int indeksi) {
         return this.pakka.get(indeksi).toString();

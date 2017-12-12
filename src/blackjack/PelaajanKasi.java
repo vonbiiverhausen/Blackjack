@@ -60,4 +60,9 @@ public class PelaajanKasi {
         }
         return kasi;
     }
+    
+    public void nollaaKasi() {
+        this.kortit.clear();
+        this.onBlackJack = false;
+    }
 }
