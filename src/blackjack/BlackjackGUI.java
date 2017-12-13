@@ -15,6 +15,8 @@ public class BlackjackGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        lbViesti = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lbPelaaja = new javax.swing.JLabel();
         lbKortit = new javax.swing.JLabel();
@@ -27,6 +29,23 @@ public class BlackjackGUI extends javax.swing.JFrame {
         mPeli = new javax.swing.JMenu();
         miPelaa = new javax.swing.JMenuItem();
         miLopeta = new javax.swing.JMenuItem();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbViesti)
+                .addContainerGap(394, Short.MAX_VALUE))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbViesti)
+                .addContainerGap(294, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,12 +199,14 @@ public class BlackjackGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bnOtaKortti;
     private javax.swing.JButton bnPelaaKasi;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbKortit;
     private static javax.swing.JLabel lbNaytaKortit;
     private static javax.swing.JLabel lbNaytaPisteet;
     private javax.swing.JLabel lbPelaaja;
     private javax.swing.JLabel lbPisteet;
+    private javax.swing.JLabel lbViesti;
     private javax.swing.JMenu mPeli;
     private javax.swing.JMenuBar mbMain;
     private javax.swing.JMenuItem miLopeta;
