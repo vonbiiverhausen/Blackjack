@@ -25,28 +25,39 @@ public class Blackjack {
     public static void main(String[] args) {
         Korttipakka pakka = new Korttipakka(1);
         PelaajanKasi pelaaja = new PelaajanKasi();
+        PelaajanKasi talo = new PelaajanKasi();
         BlackjackIkkuna peli = new BlackjackIkkuna();
+        
+        peli.lisaaPaneeli(pelaaja.peliPaneeliLayout, pelaaja.pelaajanPaneeli, pelaaja.lbPisteet, pelaaja.lbNaytaPisteet, pelaaja.lbKortit,
+                pelaaja.lbPelaaja, pelaaja.lbNaytaKortit, pelaaja.bnOtaKortti, pelaaja.bnPelaaKasi);
+        peli.add(pelaaja.pelaajanPaneeli);
+        
+        peli.lisaaPaneeli(talo.peliPaneeliLayout, talo.pelaajanPaneeli, talo.lbPisteet, talo.lbNaytaPisteet, talo.lbKortit,
+                talo.lbPelaaja, talo.lbNaytaKortit, talo.bnOtaKortti, talo.bnPelaaKasi);
+        peli.add(talo.pelaajanPaneeli);
+        
         peli.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         peli.setVisible(true);
-        peli.bnOtaKortti.setEnabled(false);
-        peli.bnPelaaKasi.setEnabled(false);
+        peli.pack();
+        pelaaja.bnOtaKortti.setEnabled(false);
+        pelaaja.bnPelaaKasi.setEnabled(false);
 
         // Näytetään tilanne
-        peli.asetaKortit(pelaaja.naytaKasi());
-        peli.asetaPisteet(pelaaja.selvitaSumma());
+        pelaaja.asetaKortit(pelaaja.naytaKasi());
+        pelaaja.asetaPisteet(pelaaja.selvitaSumma());
         
         // ActionListenerit
         // 'Ota Kortti' painike
-        peli.bnOtaKortti.addActionListener(new ActionListener() {
+        pelaaja.bnOtaKortti.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 pelaaja.otaKortti(pakka.jaaKortti());
-                peli.asetaKortit(pelaaja.naytaKasi());
-                peli.asetaPisteet(pelaaja.selvitaSumma());
+                pelaaja.asetaKortit(pelaaja.naytaKasi());
+                pelaaja.asetaPisteet(pelaaja.selvitaSumma());
                 if (pelaaja.selvitaSumma() > 21) {
                     // häviä
-                    peli.bnOtaKortti.setEnabled(false);
-                    peli.bnPelaaKasi.setEnabled(false);
+                    pelaaja.bnOtaKortti.setEnabled(false);
+                    pelaaja.bnPelaaKasi.setEnabled(false);
                     vertaa(pelaaja);
                     System.out.println("Yli 21 pistettä! Hävisit!");
                 }
@@ -54,14 +65,14 @@ public class Blackjack {
         });
         
         // 'Pelaa Käsi' Painike
-        peli.bnPelaaKasi.addActionListener(new ActionListener() {
+        pelaaja.bnPelaaKasi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 // Painike 'Pelaa Käsi'
                 // Vuoro siirtyy talolle
                 // Disabloi painikkeet
-                peli.bnOtaKortti.setEnabled(false);
-                peli.bnPelaaKasi.setEnabled(false);
+                pelaaja.bnOtaKortti.setEnabled(false);
+                pelaaja.bnPelaaKasi.setEnabled(false);
                 
                 vertaa(pelaaja);
             }
@@ -80,16 +91,16 @@ public class Blackjack {
                 pelaaja.otaKortti(pakka.jaaKortti());
 
                 // Päivitetään käsi- ja pistekentät
-                peli.asetaKortit(pelaaja.naytaKasi());
-                peli.asetaPisteet(pelaaja.selvitaSumma());
+                pelaaja.asetaKortit(pelaaja.naytaKasi());
+                pelaaja.asetaPisteet(pelaaja.selvitaSumma());
                 
                 // Jos saadaan heti blackjack, mennään vertaukseen
                 // Muutoin enabloidaan näppäimet, jotta voidaan pelata
                 if (pelaaja.onBlackjack()) {
                     vertaa(pelaaja);
                 } else {
-                    peli.bnOtaKortti.setEnabled(true);
-                    peli.bnPelaaKasi.setEnabled(true);
+                    pelaaja.bnOtaKortti.setEnabled(true);
+                    pelaaja.bnPelaaKasi.setEnabled(true);
                 }
 
                 

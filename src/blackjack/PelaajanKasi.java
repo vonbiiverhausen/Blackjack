@@ -1,14 +1,40 @@
 package blackjack;
 
 import java.util.ArrayList;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
 
 public class PelaajanKasi {
     final private ArrayList<Kortti> kortit;
     private boolean onBlackJack;
     
+    JPanel pelaajanPaneeli;
+    JLabel lbKortit;
+    JLabel lbNaytaKortit;
+    JLabel lbNaytaPisteet;
+    JLabel lbPelaaja;
+    JLabel lbPisteet;
+    JButton bnOtaKortti;
+    JButton bnPelaaKasi;
+    GroupLayout peliPaneeliLayout; 
     public PelaajanKasi() {
         this.kortit = new ArrayList<>();
         this.onBlackJack = false;
+        
+        pelaajanPaneeli = new JPanel();
+        lbPelaaja = new JLabel();
+        lbKortit = new JLabel();
+        lbPisteet = new JLabel();
+        lbNaytaPisteet = new JLabel();
+        lbNaytaKortit = new JLabel();
+        bnOtaKortti = new JButton();
+        bnPelaaKasi = new JButton();
+        peliPaneeliLayout = new GroupLayout(pelaajanPaneeli);
+        
+        this.asetaPaneeli();
     }
     
     public boolean onBlackjack() {
@@ -62,5 +88,66 @@ public class PelaajanKasi {
     public void nollaaKasi() {
         this.kortit.clear();
         this.onBlackJack = false;
+    }
+    
+    public void asetaPisteet(int pisteet) {
+        this.lbNaytaPisteet.setText("" + pisteet);
+    }
+
+    public void asetaKortit(String kasi) {
+        this.lbNaytaKortit.setText(kasi);
+    }
+    
+    // Pelaajan paneeli ja sen komponentit
+    public void asetaPaneeli() {
+        
+        lbPelaaja.setText("Pelaaja");
+        lbKortit.setText("Kortit: ");
+        lbNaytaKortit.setText("Kortit tähän");
+        lbPisteet.setText("Pisteet: ");
+        lbNaytaPisteet.setText("Pisteet tähän");
+        bnOtaKortti.setText("Ota Kortti");
+        bnPelaaKasi.setText("Pelaa Käsi");
+
+        GroupLayout peliPaneeliLayout = new GroupLayout(pelaajanPaneeli);
+        pelaajanPaneeli.setLayout(peliPaneeliLayout);
+        peliPaneeliLayout.setHorizontalGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(peliPaneeliLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(peliPaneeliLayout.createSequentialGroup()
+                        .addComponent(lbPisteet)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbNaytaPisteet))
+                    .addGroup(peliPaneeliLayout.createSequentialGroup()
+                        .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbKortit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbPelaaja, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbNaytaKortit))
+                    .addComponent(bnOtaKortti)
+                    .addComponent(bnPelaaKasi))
+                .addContainerGap(267, Short.MAX_VALUE))
+        );
+
+        peliPaneeliLayout.setVerticalGroup(
+                peliPaneeliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(peliPaneeliLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lbPelaaja)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lbKortit)
+                                        .addComponent(lbNaytaKortit))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(lbPisteet)
+                                        .addComponent(lbNaytaPisteet))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bnOtaKortti)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bnPelaaKasi)
+                                .addContainerGap(129, Short.MAX_VALUE))
+        );
     }
 }
