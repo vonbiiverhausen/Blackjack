@@ -15,6 +15,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lbPelaaja = new javax.swing.JLabel();
         lbKortit = new javax.swing.JLabel();
@@ -23,6 +24,14 @@ public class BlackjackGUI extends javax.swing.JFrame {
         lbNaytaKortit = new javax.swing.JLabel();
         bnOtaKortti = new javax.swing.JButton();
         bnPelaaKasi = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lbPelaaja1 = new javax.swing.JLabel();
+        lbKortit1 = new javax.swing.JLabel();
+        lbPisteet1 = new javax.swing.JLabel();
+        lbNaytaPisteet1 = new javax.swing.JLabel();
+        lbNaytaKortit1 = new javax.swing.JLabel();
+        bnOtaKortti1 = new javax.swing.JButton();
+        bnPelaaKasi1 = new javax.swing.JButton();
         mbMain = new javax.swing.JMenuBar();
         mPeli = new javax.swing.JMenu();
         miPelaa = new javax.swing.JMenuItem();
@@ -30,6 +39,7 @@ public class BlackjackGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Blackjack");
+        setPreferredSize(new java.awt.Dimension(400, 300));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 277));
@@ -95,7 +105,90 @@ public class BlackjackGUI extends javax.swing.JFrame {
                 .addComponent(bnOtaKortti)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bnPelaaKasi)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setPreferredSize(new java.awt.Dimension(200, 277));
+
+        lbPelaaja1.setText("Pelaaja");
+
+        lbKortit1.setText("Kortit: ");
+
+        lbPisteet1.setText("Pisteet: ");
+
+        lbNaytaPisteet1.setText("Pisteet tähän");
+
+        bnOtaKortti1.setText("Ota Kortti");
+        bnOtaKortti1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnOtaKortti1ActionPerformed(evt);
+            }
+        });
+
+        bnPelaaKasi1.setText("Pelaa Käsi");
+        bnPelaaKasi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnPelaaKasi1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lbPisteet1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbNaytaPisteet1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbKortit1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbPelaaja1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbNaytaKortit1))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(bnOtaKortti1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bnPelaaKasi1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(71, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbPelaaja1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbKortit1)
+                    .addComponent(lbNaytaKortit1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPisteet1)
+                    .addComponent(lbNaytaPisteet1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bnOtaKortti1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bnPelaaKasi1)
+                .addContainerGap(186, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
         );
 
         mPeli.setText("Peli");
@@ -124,11 +217,11 @@ public class BlackjackGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -149,6 +242,14 @@ public class BlackjackGUI extends javax.swing.JFrame {
     private void bnOtaKorttiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnOtaKorttiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bnOtaKorttiActionPerformed
+
+    private void bnOtaKortti1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnOtaKortti1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bnOtaKortti1ActionPerformed
+
+    private void bnPelaaKasi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnPelaaKasi1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bnPelaaKasi1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,18 +279,27 @@ public class BlackjackGUI extends javax.swing.JFrame {
         });
         
         Korttipakka pelipakka = new Korttipakka(1);
-        PelaajanKasi pelaaja = new PelaajanKasi();
+//        PelaajanKasi pelaaja = new PelaajanKasi();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bnOtaKortti;
+    private javax.swing.JButton bnOtaKortti1;
     private javax.swing.JButton bnPelaaKasi;
+    private javax.swing.JButton bnPelaaKasi1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lbKortit;
+    private javax.swing.JLabel lbKortit1;
     private javax.swing.JLabel lbNaytaKortit;
+    private static javax.swing.JLabel lbNaytaKortit1;
     private javax.swing.JLabel lbNaytaPisteet;
+    private static javax.swing.JLabel lbNaytaPisteet1;
     private javax.swing.JLabel lbPelaaja;
+    private javax.swing.JLabel lbPelaaja1;
     private javax.swing.JLabel lbPisteet;
+    private javax.swing.JLabel lbPisteet1;
     private javax.swing.JMenu mPeli;
     private javax.swing.JMenuBar mbMain;
     private javax.swing.JMenuItem miLopeta;

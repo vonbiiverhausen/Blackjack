@@ -24,17 +24,16 @@ public class Blackjack {
     
     public static void main(String[] args) {
         Korttipakka pakka = new Korttipakka(1);
-        PelaajanKasi pelaaja = new PelaajanKasi();
-        PelaajanKasi talo = new PelaajanKasi();
+        PelaajanKasi pelaaja = new PelaajanKasi("Pelaaja");
+        PelaajanKasi talo = new PelaajanKasi("Talo");
         BlackjackIkkuna peli = new BlackjackIkkuna();
         
-        peli.lisaaPaneeli(pelaaja.peliPaneeliLayout, pelaaja.pelaajanPaneeli, pelaaja.lbPisteet, pelaaja.lbNaytaPisteet, pelaaja.lbKortit,
-                pelaaja.lbPelaaja, pelaaja.lbNaytaKortit, pelaaja.bnOtaKortti, pelaaja.bnPelaaKasi);
-        peli.add(pelaaja.pelaajanPaneeli);
-        
-        peli.lisaaPaneeli(talo.peliPaneeliLayout, talo.pelaajanPaneeli, talo.lbPisteet, talo.lbNaytaPisteet, talo.lbKortit,
-                talo.lbPelaaja, talo.lbNaytaKortit, talo.bnOtaKortti, talo.bnPelaaKasi);
-        peli.add(talo.pelaajanPaneeli);
+        peli.lisaaPaneeli(pelaaja.pelaajanPaneeli, talo.pelaajanPaneeli);
+        //peli.lisaaPaneeli(talo.pelaajanPaneeli);
+        //peli.add(pelaaja.pelaajanPaneeli);
+        //peli.add(talo.pelaajanPaneeli);
+        peli.mainPanel.add(pelaaja.pelaajanPaneeli);
+        peli.mainPanel.add(talo.pelaajanPaneeli);
         
         peli.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         peli.setVisible(true);
@@ -102,8 +101,6 @@ public class Blackjack {
                     pelaaja.bnOtaKortti.setEnabled(true);
                     pelaaja.bnPelaaKasi.setEnabled(true);
                 }
-
-                
             }
         });
         

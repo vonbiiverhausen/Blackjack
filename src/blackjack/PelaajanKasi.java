@@ -10,6 +10,7 @@ import javax.swing.LayoutStyle;
 public class PelaajanKasi {
     final private ArrayList<Kortti> kortit;
     private boolean onBlackJack;
+    private String nimi;
     
     JPanel pelaajanPaneeli;
     JLabel lbKortit;
@@ -20,8 +21,9 @@ public class PelaajanKasi {
     JButton bnOtaKortti;
     JButton bnPelaaKasi;
     GroupLayout peliPaneeliLayout; 
-    public PelaajanKasi() {
+    public PelaajanKasi(String nimi) {
         this.kortit = new ArrayList<>();
+        this.nimi = nimi;
         this.onBlackJack = false;
         
         pelaajanPaneeli = new JPanel();
@@ -101,7 +103,7 @@ public class PelaajanKasi {
     // Pelaajan paneeli ja sen komponentit
     public void asetaPaneeli() {
         
-        lbPelaaja.setText("Pelaaja");
+        lbPelaaja.setText(this.nimi);
         lbKortit.setText("Kortit: ");
         lbNaytaKortit.setText("Kortit tähän");
         lbPisteet.setText("Pisteet: ");
