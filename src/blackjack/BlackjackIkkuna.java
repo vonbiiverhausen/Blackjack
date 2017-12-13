@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class BlackjackIkkuna extends JFrame {
     private JFrame peliIkkuna;
-    private JPanel peliPaneeli;
+    private JPanel pelaajanPaneeli;
     private JLabel lbKortit;
     private JLabel lbNaytaKortit;
     private JLabel lbNaytaPisteet;
@@ -22,7 +22,7 @@ public class BlackjackIkkuna extends JFrame {
     
     public BlackjackIkkuna() {
         peliIkkuna = new JFrame();
-        peliPaneeli = new JPanel();
+        pelaajanPaneeli = new JPanel();
         lbPelaaja = new JLabel();
         lbKortit = new JLabel();
         lbPisteet = new JLabel();
@@ -50,8 +50,8 @@ public class BlackjackIkkuna extends JFrame {
         mbMain.add(mPeli);
         setJMenuBar(mbMain);
         
-        GroupLayout peliPaneeliLayout = new GroupLayout(peliPaneeli);
-        peliPaneeli.setLayout(peliPaneeliLayout);
+        GroupLayout peliPaneeliLayout = new GroupLayout(pelaajanPaneeli);
+        pelaajanPaneeli.setLayout(peliPaneeliLayout);
         peliPaneeliLayout.setHorizontalGroup(peliPaneeliLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(peliPaneeliLayout.createSequentialGroup()
                 .addContainerGap()
@@ -93,17 +93,15 @@ public class BlackjackIkkuna extends JFrame {
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(peliPaneeli, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(pelaajanPaneeli, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(peliPaneeli, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(pelaajanPaneeli, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         
-        peliIkkuna.add(peliPaneeli);
+        peliIkkuna.add(pelaajanPaneeli);
         peliIkkuna.setSize(400, 400);
         pack();
     }
