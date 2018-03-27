@@ -24,11 +24,7 @@ public class Korttipakka {
             luoKortit("Pata");
             luoKortit("Risti");
         }
-        this.sekoita();
-    }
-    
-    public void sekoita() {
-        Collections.shuffle(pakka);
+        Collections.shuffle(this.pakka);
     }
     
     public Kortti jaaKortti() {
@@ -46,7 +42,7 @@ public class Korttipakka {
             luoKortit("Pata");
             luoKortit("Risti");
         }
-        this.sekoita();
+        Collections.shuffle(this.pakka);
     }
     
     // Testataan pakan täyttö korteilla

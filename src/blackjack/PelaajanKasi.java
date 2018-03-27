@@ -4,19 +4,43 @@ import java.util.ArrayList;
 
 public class PelaajanKasi {
     final private ArrayList<Kortti> kortit;
-    private boolean onBlackJack;
+    private boolean onBlackJack, yli21;
+    private String nimi;
+    private int saldo, id;
+    private Korttipakka pakka;
     
-    public PelaajanKasi() {
+    public PelaajanKasi(String nimi, int id, Korttipakka pakka, int saldo) {
         this.kortit = new ArrayList<>();
         this.onBlackJack = false;
+        this.yli21 = false;
+        this.nimi = nimi;
+        this.pakka = pakka;
+        this.saldo = saldo;
+        this.id = id;
+    }
+    
+    public String haeNimi() {
+        return this.nimi;
+    }
+    
+    public int haeId() {
+        return this.id;
+    }
+    
+    public int haeSaldo() {
+        return this.saldo;
     }
     
     public boolean onBlackjack() {
         return this.onBlackJack;
     }
     
-    public void otaKortti(Kortti kortti) {
-        this.kortit.add(kortti);
+    public boolean onYli21() {
+        return this.yli21;
+    }
+    
+    public void otaKortti() {
+        this.kortit.add(pakka.jaaKortti());
     }
     
     public int selvitaSumma() {
@@ -52,15 +76,16 @@ public class PelaajanKasi {
     }
     
     public String naytaKasi() {
-        String kasi = "";
-        for (Kortti kortti : kortit) {
-            kasi += kortti.getMaa()+" ";
-        }
-        return kasi;
+        return kortit.get(kortit.size()-1).toString();
     }
     
     public void nollaaKasi() {
         this.kortit.clear();
         this.onBlackJack = false;
+        this.yli21 = false;
+    }
+    
+    public void saiYli21() {
+        this.yli21 = true;
     }
 }

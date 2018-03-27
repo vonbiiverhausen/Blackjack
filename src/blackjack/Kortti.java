@@ -27,6 +27,6 @@ public class Kortti {
     
     @Override
     public String toString() {
-        return "Kortti: "+this.maa+", arvo: "+this.arvo;
+        return this.maa;
     }
 }

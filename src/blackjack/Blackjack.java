@@ -1,107 +1,120 @@
 package blackjack;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.sql.*;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Blackjack {
     
-    public static void vertaa(PelaajanKasi pelaaja) {
-        String viesti = "";
+    static enum Tilanne {voitto, havio}; // voittiko vai hävisikö pelaaja
+    static BlackjackIkkuna peli;
+    static PelaajanKasi talo, pelaaja;
+    static Korttipakka pakka;
+    private static Connection tkYhteys;
+    private static String ajuri = "com.mysql.jdbc.Driver",
+            tkOsoite = "jdbc:mysql://localhost:3306/blackjack",
+            passu = "8(GNbr7y", kayttajanimi = "blackjack";
+    
+    
+    // talon "tekoäly"
+    public static void pelaa(PelaajanKasi kasi) {
+        peli.napitPaalle(false);
+        
+        peli.otaKortti(kasi);
+        peli.otaKortti(kasi);
+        
+        while (true) {
+            if (kasi.selvitaSumma() < 15) {
+                // otetaan kortti
+                peli.otaKortti(kasi);
+            } else {
+                // mene vertaamaan
+                break;
+            }
+        }
+        
+        vertaa(pelaaja, talo);
+    }
+    
+    
+    // verrataan pelaajien käsiä
+    public static void vertaa(PelaajanKasi pelaaja, PelaajanKasi talo) {
+        StringBuilder sb = new StringBuilder();
+        Tilanne voittohavio;
+        // katsotan blackjackit
+        // metodeiksi?
+        
+        // Oletetaan että pelaaja häviää
+        // Pelaaja voittaa jos:
+        // - pelaajalla blackjack, mutta talolla ei
+        // - talo ylitti 21 pistettä
+        // - pelaaja lähempänä 21 pistettä kuin talo (kumpikaan ei ole ylittänyt 21 pistettä)
+        
+        if (pelaaja.onBlackjack() && !talo.onBlackjack()) {
+            System.out.println("Pelaaja voitti!");
+            voittohavio = Tilanne.voitto;
+        } else if (talo.onYli21() && !pelaaja.onYli21()) {
+            System.out.println("Pelaaja voitti");
+            voittohavio = Tilanne.voitto;
+        } else if (!pelaaja.onYli21() && !talo.onYli21() && (21-pelaaja.selvitaSumma() < 21-talo.selvitaSumma()) ) {
+            System.out.println("Pelaaja voitti!");
+            voittohavio = Tilanne.voitto;
+        } else {
+            System.out.println("Pelaaja hävisi!");
+            voittohavio = Tilanne.havio;
+        }
+        
         
         if (pelaaja.onBlackjack()) {
-            viesti += "Pelaajalla on blackjack!";
-        } else if (pelaaja.selvitaSumma() < 22){
-            viesti += "Pelaajalla on "+pelaaja.selvitaSumma()+" pistettä";
+            sb.append(String.format("%s sai blackjackin!\n", pelaaja.haeNimi()));
         } else {
-            viesti += "Pelaaja sai yli 21 pistettä. Pelaaja hävisi";
+            sb.append(String.format("%s sai %d pistettä\n", pelaaja.haeNimi(), pelaaja.selvitaSumma()));
+        }
+        
+        if (talo.onBlackjack()) {
+            sb.append(String.format("%s sai blackjackin!\n", talo.haeNimi()));
+        } else {
+            sb.append(String.format("%s sai %d pistettä\n", talo.haeNimi(), talo.selvitaSumma()));
         }
         
         javax.swing.JOptionPane.showMessageDialog(null,
-        viesti);
-        System.out.println(viesti);
+                sb.toString());
+        sb = null;
+        
+        try {
+            Tietokanta.tallennaTilanne(pelaaja, voittohavio, tkYhteys);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     
+    // Kysytään pelaajan nimi
+    public static String kysyNimi() {
+        String nimi;
+        
+        do {
+            nimi = JOptionPane.showInputDialog(null, "Kerro pelinimesi");
+            nimi = nimi.trim();  // poistetaan whitespace-merkit nimen molemminpuolin
+        } while (nimi.isEmpty());
+        
+        return nimi;
+    }
+
     public static void main(String[] args) {
-        Korttipakka pakka = new Korttipakka(1);
-        PelaajanKasi pelaaja = new PelaajanKasi();
-        BlackjackIkkuna peli = new BlackjackIkkuna();
+        String pelaajanNimi = kysyNimi();
+        
+        pakka = new Korttipakka(1);
+        talo = new PelaajanKasi("Talo", 0, pakka, 200);
+        
+        try {
+            tkYhteys = Tietokanta.luoYhteys(kayttajanimi, passu, tkOsoite, ajuri);
+            pelaaja = Tietokanta.etsiPelaaja(pelaajanNimi, tkYhteys);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        peli = new BlackjackIkkuna(pelaaja, talo, pakka);
         peli.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         peli.setVisible(true);
-        peli.bnOtaKortti.setEnabled(false);
-        peli.bnPelaaKasi.setEnabled(false);
-
-        // Näytetään tilanne
-        peli.asetaKortit(pelaaja.naytaKasi());
-        peli.asetaPisteet(pelaaja.selvitaSumma());
-        
-        // ActionListenerit
-        // 'Ota Kortti' painike
-        peli.bnOtaKortti.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                pelaaja.otaKortti(pakka.jaaKortti());
-                peli.asetaKortit(pelaaja.naytaKasi());
-                peli.asetaPisteet(pelaaja.selvitaSumma());
-                if (pelaaja.selvitaSumma() > 21) {
-                    // häviä
-                    peli.bnOtaKortti.setEnabled(false);
-                    peli.bnPelaaKasi.setEnabled(false);
-                    vertaa(pelaaja);
-                    System.out.println("Yli 21 pistettä! Hävisit!");
-                }
-            }
-        });
-        
-        // 'Pelaa Käsi' Painike
-        peli.bnPelaaKasi.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                // Painike 'Pelaa Käsi'
-                // Vuoro siirtyy talolle
-                // Disabloi painikkeet
-                peli.bnOtaKortti.setEnabled(false);
-                peli.bnPelaaKasi.setEnabled(false);
-                
-                vertaa(pelaaja);
-            }
-        });
-        
-        // MenuItem 'Pelaa'
-        peli.miPelaa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                // Nollataan tiedot, käytetään uuden pelin alustuksessa
-                pelaaja.nollaaKasi();
-                pakka.nollaaPakka();
-
-                // Aluksi saadaan kaksi korttia
-                pelaaja.otaKortti(pakka.jaaKortti());
-                pelaaja.otaKortti(pakka.jaaKortti());
-
-                // Päivitetään käsi- ja pistekentät
-                peli.asetaKortit(pelaaja.naytaKasi());
-                peli.asetaPisteet(pelaaja.selvitaSumma());
-                
-                // Jos saadaan heti blackjack, mennään vertaukseen
-                // Muutoin enabloidaan näppäimet, jotta voidaan pelata
-                if (pelaaja.onBlackjack()) {
-                    vertaa(pelaaja);
-                } else {
-                    peli.bnOtaKortti.setEnabled(true);
-                    peli.bnPelaaKasi.setEnabled(true);
-                }
-
-                
-            }
-        });
-        
-        // 'Lopeta' MenuItem
-        peli.miLopeta.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                System.exit(0);
-            }
-        });
     }
 }
