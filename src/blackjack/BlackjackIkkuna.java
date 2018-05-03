@@ -6,34 +6,42 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BlackjackIkkuna extends JFrame {
-    private JButton bnOtaKortti;
-    private JButton bnPelaaKasi;
-    private JScrollPane jScrollPelaajanKortit;
-    private JList<String> jPelaajanKorttiLista;
-    private JScrollPane jScrollTalonKortit;
-    private JList<String> jTalonKorttiLista;
-    private JLabel lbNaytaPelaajaPisteet;
-    private JLabel lbNaytaTaloPisteet;
-    private JLabel lbPelaaja;
-    private JLabel lbPelaajaKortit;
-    private JLabel lbPelaajaPisteet;
-    private JLabel lbTalo;
-    private JLabel lbTaloKortit;
-    private JLabel lbTaloPisteet;
+    private JButton bnOtaKortti, 
+            bnPelaaKasi;
+    private JScrollPane jScrollPelaajanKortit,
+            jScrollTalonKortit;
+    private JList<String> jPelaajanKorttiLista,
+            jTalonKorttiLista;
+    private JLabel lbNaytaPelaajaPisteet,
+            lbNaytaTaloPisteet,
+            lbPelaaja,
+            lbPelaajaKortit,
+            lbPelaajaPisteet,
+            lbTalo,
+            lbTaloKortit,
+            lbTaloPisteet,
+            lbNaytaPanos,
+            lbNaytaSaldo,
+            lbPanos,
+            lbSaldo;
     private JMenu mPeli;
     private JMenuBar mbMain;
-    private JMenuItem miLopeta;
-    private JMenuItem miPelaa;
-    private JPanel pelaajaPanel;
-    private JPanel taloPanel;
+    private JMenuItem miLopeta,
+            miPelaa;
+    private JPanel pelaajaPanel,
+            taloPanel;
     private PelaajanKasi pelaaja, talo;
-    private Korttipakka korttipakka;
     private DefaultListModel listModelPelaaja, listModelTalo;
+    private AsetaPanos panosIkkuna;
+    private PeliMoottori pelimoottori;
     
-    public BlackjackIkkuna(PelaajanKasi pelaaja, PelaajanKasi talo, Korttipakka pakka) {
+    public BlackjackIkkuna(PelaajanKasi pelaaja, PelaajanKasi talo, PeliMoottori pelimoottori) {
         this.pelaaja = pelaaja;
         this.talo = talo;
-        this.korttipakka = pakka;
+        this.pelimoottori = pelimoottori;
+        this.panosIkkuna = new AsetaPanos();
+        panosIkkuna.asetaPelimoottori(pelimoottori); // Kerrotaan Panosikkunalle mitä Pelimoottori-oliota käytetään
+        
         listModelPelaaja = new DefaultListModel();
         listModelTalo = new DefaultListModel();
         
@@ -67,6 +75,10 @@ public class BlackjackIkkuna extends JFrame {
         mPeli = new JMenu();
         miPelaa = new JMenuItem();
         miLopeta = new JMenuItem();
+        lbSaldo = new JLabel();
+        lbPanos = new JLabel();
+        lbNaytaSaldo = new JLabel();
+        lbNaytaPanos = new JLabel();
         
         napitPaalle(false);
 
@@ -82,63 +94,83 @@ public class BlackjackIkkuna extends JFrame {
 
         lbPelaajaPisteet.setText("Pisteet: ");
 
-        lbNaytaPelaajaPisteet.setText(""+pelaaja.selvitaSumma());
+        lbNaytaPelaajaPisteet.setText(String.valueOf(pelaaja.selvitaSumma()));
 
         bnOtaKortti.setText("Ota Kortti");
-        bnOtaKortti.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                otaKortti(pelaaja);
-            }
+        bnOtaKortti.addActionListener((ActionEvent evt) -> {
+            this.pelimoottori.otaKortti(this.pelaaja);
         });
 
         bnPelaaKasi.setText("Pelaa Käsi");
         bnPelaaKasi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                Blackjack.pelaa(talo);
+                pelimoottori.pelaa(talo);
             }
         });
 
         jScrollPelaajanKortit.setViewportView(jPelaajanKorttiLista);
+        
+        lbNaytaSaldo.setText(String.valueOf(pelaaja.haeSaldo()));
+
+        lbNaytaPanos.setText("0");
+
+        lbPanos.setText("Panos:");
+
+        lbSaldo.setText("Saldo:");
 
         GroupLayout pelaajaPanelLayout = new GroupLayout(pelaajaPanel);
         pelaajaPanel.setLayout(pelaajaPanelLayout);
+        pelaajaPanel.setLayout(pelaajaPanelLayout);
         pelaajaPanelLayout.setHorizontalGroup(
-            pelaajaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            pelaajaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pelaajaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pelaajaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(pelaajaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPelaajanKortit)
                     .addGroup(pelaajaPanelLayout.createSequentialGroup()
-                        .addComponent(bnOtaKortti, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bnOtaKortti, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addComponent(bnPelaaKasi))
                     .addGroup(pelaajaPanelLayout.createSequentialGroup()
-                        .addGroup(pelaajaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(pelaajaPanelLayout.createSequentialGroup()
-                                .addGroup(pelaajaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbPelaaja)
-                                    .addComponent(lbPelaajaPisteet))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbNaytaPelaajaPisteet))
-                            .addComponent(lbPelaajaKortit, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(lbPelaaja)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbSaldo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbNaytaSaldo))
+                    .addGroup(pelaajaPanelLayout.createSequentialGroup()
+                        .addComponent(lbPelaajaPisteet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbNaytaPelaajaPisteet)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pelaajaPanelLayout.createSequentialGroup()
+                        .addComponent(lbPelaajaKortit, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbPanos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbNaytaPanos)))
                 .addContainerGap())
         );
         pelaajaPanelLayout.setVerticalGroup(
-            pelaajaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            pelaajaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pelaajaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbPelaaja)
+                .addGroup(pelaajaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPelaaja)
+                    .addComponent(lbNaytaSaldo)
+                    .addComponent(lbSaldo))
                 .addGap(4, 4, 4)
-                .addGroup(pelaajaPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addGroup(pelaajaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPelaajaPisteet)
                     .addComponent(lbNaytaPelaajaPisteet))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbPelaajaKortit)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPelaajanKortit, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pelaajaPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pelaajaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPelaajaKortit)
+                    .addComponent(lbNaytaPanos)
+                    .addComponent(lbPanos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPelaajanKortit, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pelaajaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bnOtaKortti)
                     .addComponent(bnPelaaKasi))
                 .addContainerGap())
@@ -153,7 +185,7 @@ public class BlackjackIkkuna extends JFrame {
 
         lbTaloPisteet.setText("Pisteet: ");
 
-        lbNaytaTaloPisteet.setText(""+talo.selvitaSumma());
+        lbNaytaTaloPisteet.setText(String.valueOf(talo.selvitaSumma()));
 
         jScrollTalonKortit.setViewportView(jTalonKorttiLista);
 
@@ -199,20 +231,7 @@ public class BlackjackIkkuna extends JFrame {
         miPelaa.setText("Uusi peli");
         miPelaa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pakka.nollaaPakka();
-                talo.nollaaKasi();
-                pelaaja.nollaaKasi();
-                
-                lbNaytaTaloPisteet.setText(""+talo.selvitaSumma());
-                lbNaytaPelaajaPisteet.setText(""+pelaaja.selvitaSumma());
-                
-                listModelTalo.clear();
-                listModelPelaaja.clear();
-                
-                otaKortti(pelaaja);
-                otaKortti(pelaaja);
-                
-                napitPaalle(true);
+                panosIkkuna.setVisible(true);
             }
         });
         mPeli.add(miPelaa);
@@ -247,43 +266,47 @@ public class BlackjackIkkuna extends JFrame {
         pack();
     }
     
-    public void otaKortti(PelaajanKasi player) {
-        player.otaKortti();
-        
-        int pisteet = player.selvitaSumma();
-        if (player==this.talo) {
-            listModelTalo.addElement(this.talo.naytaKasi());
-            if (talo.onBlackjack()) {
-                // Mertkitään että talo sai blackjackin. Siirrytään pisteiden vertaukseen
-                lbNaytaTaloPisteet.setText("" + pisteet + " BLACKJACK!");
-                Blackjack.vertaa(pelaaja, talo);
-            } else if (pisteet > 21) {
-                // Merkitään että talo ylitti 21 pistettä. Siirrytään pisteiden vertaukseen
-                lbNaytaTaloPisteet.setText("" + pisteet + " YLI 21!");
-                talo.saiYli21();
-                Blackjack.vertaa(pelaaja, talo);
-            } else {
-                lbNaytaTaloPisteet.setText("" + pisteet);
-            }
-        } else {
-            listModelPelaaja.addElement(player.naytaKasi());
-            if (pelaaja.onBlackjack()) {
-                // merkitään että on saatu blackjack. Vuoro siirtyy talolle
-                lbNaytaPelaajaPisteet.setText("" + pisteet + " BLACKJACK!");
-                Blackjack.pelaa(talo);
-            } else if (pisteet > 21) {
-                // merkitään että on ylitetty 21 pistettä. Vuoro siirtyy talolle
-                lbNaytaPelaajaPisteet.setText("" + pisteet + " YLI 21!");
-                pelaaja.saiYli21();
-                Blackjack.pelaa(talo);
-            } else {
-                lbNaytaPelaajaPisteet.setText("" + pisteet);
-            }
-        }
-    }
-    
     public void napitPaalle(boolean paalle) {
         this.bnOtaKortti.setEnabled(paalle);
         this.bnPelaaKasi.setEnabled(paalle);
+    }
+    
+    public void naytaSaldo() {
+        this.lbNaytaSaldo.setText(String.valueOf(pelaaja.haeSaldo()));
+    }
+    
+    public void asetaOtsikko(String nimi) {
+        this.setTitle("BlackJack - "+nimi);
+    }
+    
+    public void asetaPisteet() {
+        lbNaytaTaloPisteet.setText(String.valueOf(talo.selvitaSumma()));
+        lbNaytaPelaajaPisteet.setText(String.valueOf(pelaaja.selvitaSumma()));
+    }
+    
+    public void nollaaListat() {
+        listModelTalo.clear();
+        listModelPelaaja.clear();
+    }
+    
+    public void paivitaSaldo(int panos) {
+        this.lbNaytaSaldo.setText(String.valueOf(pelaaja.haeSaldo()));
+        this.lbNaytaPanos.setText(String.valueOf(panos));
+    }
+    
+    public void paivitaTalonKortit(String kortit) {
+        listModelTalo.addElement(kortit);
+    }
+    
+    public void paivitaPelaajanKortit(String kortit) {
+        listModelPelaaja.addElement(kortit);
+    }
+    
+    public void naytaTalonPisteet(String pisteet) {
+        lbNaytaTaloPisteet.setText(String.valueOf(pisteet));
+    }
+    
+    public void naytaPelaajanPisteet(String pisteet) {
+        lbNaytaPelaajaPisteet.setText(String.valueOf(pisteet));
     }
 }

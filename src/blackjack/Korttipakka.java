@@ -44,9 +44,4 @@ public class Korttipakka {
         }
         Collections.shuffle(this.pakka);
     }
-    
-    // Testataan pakan täyttö korteilla
-    public String testaaKortti(int indeksi) {
-        return this.pakka.get(indeksi).toString();
-    }
 }

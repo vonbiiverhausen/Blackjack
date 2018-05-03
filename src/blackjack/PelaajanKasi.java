@@ -6,10 +6,12 @@ public class PelaajanKasi {
     final private ArrayList<Kortti> kortit;
     private boolean onBlackJack, yli21;
     private String nimi;
-    private int saldo, id;
+    private int saldo,
+            id,
+            panos;
     private Korttipakka pakka;
     
-    public PelaajanKasi(String nimi, int id, Korttipakka pakka, int saldo) {
+    public PelaajanKasi(String nimi, int id, int saldo) {
         this.kortit = new ArrayList<>();
         this.onBlackJack = false;
         this.yli21 = false;
@@ -17,6 +19,10 @@ public class PelaajanKasi {
         this.pakka = pakka;
         this.saldo = saldo;
         this.id = id;
+    }
+    
+    public void setPakka(Korttipakka pakka) {
+        this.pakka = pakka;
     }
     
     public String haeNimi() {
@@ -87,5 +93,14 @@ public class PelaajanKasi {
     
     public void saiYli21() {
         this.yli21 = true;
+    }
+    
+    public void asetaPanos(int panos) {
+        this.panos = panos;
+        this.saldo -= panos;
+    }
+    
+    public void voita() {
+        saldo += 2*panos;
     }
 }
