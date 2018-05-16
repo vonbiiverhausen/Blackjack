@@ -39,9 +39,15 @@ public class PeliMoottori {
         }
         
         // Luodaan peli-ikkuna. Lisätään otsikkoon pelaajan nimi. Laitetaan ikkuna näkviin
-        peliIkkuna = new BlackjackIkkuna(pelaaja, talo, this);
+        peliIkkuna = new BlackjackIkkuna(this);
         peliIkkuna.asetaOtsikko(pelaaja.haeNimi());
         peliIkkuna.setVisible(true);
+        
+        peliIkkuna.asetaTalonNimi(talo.haeNimi());
+        peliIkkuna.naytaSaldo(pelaaja.haeSaldo());
+        peliIkkuna.asetaPelaajanNimi(pelaaja.haeNimi());
+        peliIkkuna.naytaPelaajanPisteet(String.valueOf(pelaaja.selvitaSumma()));
+        peliIkkuna.naytaTalonPisteet(String.valueOf(talo.selvitaSumma()));
     }
     
     /** Metodi nollaa korttipakan, pelaajien kädet ja asettaa uuden panoksen
@@ -54,38 +60,34 @@ public class PeliMoottori {
         pelaaja.nollaaKasi();
         
         // Nollaa pisteet
-        peliIkkuna.asetaPisteet();
+        peliIkkuna.naytaPelaajanPisteet("0");
+        peliIkkuna.naytaTalonPisteet("0");
         
         // Nollaa taulu
         peliIkkuna.nollaaListat();
         
         // Päivitä peli-ikkunan panos- ja saldotiedot
         this.pelaaja.asetaPanos(panos);
-        peliIkkuna.paivitaSaldo(panos);
+        peliIkkuna.paivitaSaldo(pelaaja.haeSaldo(), panos);
         
         // Peli alkaa kahden kortin jaolla
-        otaKortti(pelaaja);
-        otaKortti(pelaaja);
+        pelaajaOttaaKortin();
+        pelaajaOttaaKortin();
         
         // Napit päälle, jotta pelaaja voi pelata
         peliIkkuna.napitPaalle(true);
     }
     
-    /** Metodi kortin ottamiseen.
-      * Otetaan kortti ja lasketaan uudet pisteet.
-      * Tulos välitetään BlackjackIkkuna-oliolle, jotta uusi kortti ja uusi pistetilanne päivittyy peli-ikkunaan
-      * @param pk määrittää kumpi pelaaja ottaa kortin
-      */
-    public void otaKortti(PelaajanKasi pk) {
-        // Otetaan uusi kortti
-        pk.otaKortti();
+    
+    
+    public void taloOttaaKortin() {
+    // Otetaan uusi kortti
+        talo.otaKortti();
         
         // Selvitetään summa kortinoton jälkeen
-        int pisteet = pk.selvitaSumma();
+        int pisteet = talo.selvitaSumma();
         
-        
-        if (pk==this.talo) {
-            peliIkkuna.paivitaTalonKortit(this.talo.naytaKasi());
+        peliIkkuna.paivitaTalonKortit(this.talo.naytaKasi());
             if (talo.onBlackjack()) {
                 // Merkitään että talo sai blackjackin. Siirrytään pisteiden vertaukseen
                 peliIkkuna.naytaTalonPisteet(String.valueOf(pisteet) + " BLACKJACK!");
@@ -96,21 +98,29 @@ public class PeliMoottori {
             } else {
                 peliIkkuna.naytaTalonPisteet(String.valueOf(pisteet));
             }
+    }
+    
+    public void pelaajaOttaaKortin() {
+        // Otetaan uusi kortti
+        pelaaja.otaKortti();
+
+        // Selvitetään summa kortinoton jälkeen
+        int pisteet = pelaaja.selvitaSumma();
+
+        peliIkkuna.paivitaPelaajanKortit(this.pelaaja.naytaKasi());
+        if (pelaaja.onBlackjack()) {
+            // merkitään että on saatu blackjack. Vuoro siirtyy talolle
+            peliIkkuna.naytaPelaajanPisteet(String.valueOf(pisteet) + " BLACKJACK!");
+            taloPelaa();
+        } else if (pisteet > 21) {
+            // merkitään että on ylitetty 21 pistettä. Vuoro siirtyy talolle
+            peliIkkuna.naytaPelaajanPisteet(String.valueOf(pisteet) + " YLI 21!");
+            pelaaja.saiYli21();
+            taloPelaa();
         } else {
-            peliIkkuna.paivitaPelaajanKortit(this.pelaaja.naytaKasi());
-            if (pelaaja.onBlackjack()) {
-                // merkitään että on saatu blackjack. Vuoro siirtyy talolle
-                peliIkkuna.naytaPelaajanPisteet(String.valueOf(pisteet) + " BLACKJACK!");
-                pelaa(talo);
-            } else if (pisteet > 21) {
-                // merkitään että on ylitetty 21 pistettä. Vuoro siirtyy talolle
-                peliIkkuna.naytaPelaajanPisteet(String.valueOf(pisteet) + " YLI 21!");
-                pelaaja.saiYli21();
-                pelaa(talo);
-            } else {
-                peliIkkuna.naytaPelaajanPisteet(String.valueOf(pisteet));
-            }
+            peliIkkuna.naytaPelaajanPisteet(String.valueOf(pisteet));
         }
+
     }
     
     /** Talon tekoäly
@@ -119,16 +129,16 @@ public class PeliMoottori {
       * Otetaan kortteja kun talon pisteet ovat alle 15
       * Muutoin lopetataan ja siirrytään vertaukseen
       */
-    public void pelaa(PelaajanKasi kasi) {
+    public void taloPelaa() {
         peliIkkuna.napitPaalle(false);
         
-        otaKortti(kasi);
-        otaKortti(kasi);
+        taloOttaaKortin();
+        taloOttaaKortin();
         
         while (true) {
-            if (kasi.selvitaSumma() < 15) {
+            if (talo.selvitaSumma() < 15) {
                 // otetaan kortti
-                otaKortti(kasi);
+                taloOttaaKortin();
             } else {
                 // mene vertaamaan
                 break;
@@ -189,7 +199,7 @@ public class PeliMoottori {
             sb.append("Pelaaja voitti!");
             // pelaajan saldo += 2*panos
             pelaaja.voita();
-            peliIkkuna.naytaSaldo();
+            peliIkkuna.naytaSaldo(pelaaja.haeSaldo());
         }
         
         javax.swing.JOptionPane.showMessageDialog(null, sb.toString());

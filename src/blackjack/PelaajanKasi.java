@@ -16,7 +16,6 @@ public class PelaajanKasi {
         this.onBlackJack = false;
         this.yli21 = false;
         this.nimi = nimi;
-        this.pakka = pakka;
         this.saldo = saldo;
         this.id = id;
     }

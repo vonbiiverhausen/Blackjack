@@ -30,14 +30,14 @@ public class BlackjackIkkuna extends JFrame {
             miPelaa;
     private JPanel pelaajaPanel,
             taloPanel;
-    private PelaajanKasi pelaaja, talo;
+    //private PelaajanKasi pelaaja;
     private DefaultListModel listModelPelaaja, listModelTalo;
     private AsetaPanos panosIkkuna;
     private PeliMoottori pelimoottori;
     
-    public BlackjackIkkuna(PelaajanKasi pelaaja, PelaajanKasi talo, PeliMoottori pelimoottori) {
-        this.pelaaja = pelaaja;
-        this.talo = talo;
+    public BlackjackIkkuna(PeliMoottori pelimoottori) {
+        //this.pelaaja = pelaaja;
+        //this.talo = talo;
         this.pelimoottori = pelimoottori;
         this.panosIkkuna = new AsetaPanos();
         panosIkkuna.asetaPelimoottori(pelimoottori); // Kerrotaan Panosikkunalle mitä Pelimoottori-oliota käytetään
@@ -88,29 +88,25 @@ public class BlackjackIkkuna extends JFrame {
         pelaajaPanel.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         pelaajaPanel.setPreferredSize(new Dimension(250, 300));
 
-        lbPelaaja.setText(pelaaja.haeNimi());
-
         lbPelaajaKortit.setText("Kortit: ");
 
         lbPelaajaPisteet.setText("Pisteet: ");
 
-        lbNaytaPelaajaPisteet.setText(String.valueOf(pelaaja.selvitaSumma()));
-
         bnOtaKortti.setText("Ota Kortti");
         bnOtaKortti.addActionListener((ActionEvent evt) -> {
-            this.pelimoottori.otaKortti(this.pelaaja);
+            this.pelimoottori.pelaajaOttaaKortin();
         });
 
         bnPelaaKasi.setText("Pelaa Käsi");
         bnPelaaKasi.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                pelimoottori.pelaa(talo);
+                pelimoottori.taloPelaa();
             }
         });
 
         jScrollPelaajanKortit.setViewportView(jPelaajanKorttiLista);
         
-        lbNaytaSaldo.setText(String.valueOf(pelaaja.haeSaldo()));
+        //lbNaytaSaldo.setText(String.valueOf(pelaaja.haeSaldo()));
 
         lbNaytaPanos.setText("0");
 
@@ -179,13 +175,11 @@ public class BlackjackIkkuna extends JFrame {
         taloPanel.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         taloPanel.setPreferredSize(new java.awt.Dimension(250, 300));
 
-        lbTalo.setText(talo.haeNimi());
+        // lbTalo.setText(talo.haeNimi());
 
         lbTaloKortit.setText("Kortit: ");
 
         lbTaloPisteet.setText("Pisteet: ");
-
-        lbNaytaTaloPisteet.setText(String.valueOf(talo.selvitaSumma()));
 
         jScrollTalonKortit.setViewportView(jTalonKorttiLista);
 
@@ -266,22 +260,30 @@ public class BlackjackIkkuna extends JFrame {
         pack();
     }
     
+    public void asetaTalonNimi(String nimi) {
+        lbTalo.setText(nimi);
+    }
+    
+    public void asetaPelaajanNimi(String nimi) {
+        lbPelaaja.setText(nimi);
+    }
+    
     public void napitPaalle(boolean paalle) {
         this.bnOtaKortti.setEnabled(paalle);
         this.bnPelaaKasi.setEnabled(paalle);
     }
     
-    public void naytaSaldo() {
-        this.lbNaytaSaldo.setText(String.valueOf(pelaaja.haeSaldo()));
+    public void naytaSaldo(int saldo) {
+        this.lbNaytaSaldo.setText(String.valueOf(saldo));
     }
     
     public void asetaOtsikko(String nimi) {
         this.setTitle("BlackJack - "+nimi);
     }
     
-    public void asetaPisteet() {
-        lbNaytaTaloPisteet.setText(String.valueOf(talo.selvitaSumma()));
-        lbNaytaPelaajaPisteet.setText(String.valueOf(pelaaja.selvitaSumma()));
+    public void asetaPisteet(int talonPisteet, int pelaajanPisteet) {
+        lbNaytaTaloPisteet.setText(String.valueOf(talonPisteet));
+        lbNaytaPelaajaPisteet.setText(String.valueOf(pelaajanPisteet));
     }
     
     public void nollaaListat() {
@@ -289,8 +291,8 @@ public class BlackjackIkkuna extends JFrame {
         listModelPelaaja.clear();
     }
     
-    public void paivitaSaldo(int panos) {
-        this.lbNaytaSaldo.setText(String.valueOf(pelaaja.haeSaldo()));
+    public void paivitaSaldo(int pelaajanSaldo, int panos) {
+        this.lbNaytaSaldo.setText(String.valueOf(pelaajanSaldo));
         this.lbNaytaPanos.setText(String.valueOf(panos));
     }
     
